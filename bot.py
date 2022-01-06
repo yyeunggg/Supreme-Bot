@@ -742,22 +742,23 @@ class Ui_MainWindow(object):
             driver.find_element(By.ID,"credit_card_verification_value").send_keys(self.cvvLine.text())
             
             # driver.find_element(By.ID,"order_terms").click()
-
             ## End of Steven Code
             
+            
+            # Original Code
             # driver.find_element_by_name('credit_card[month]').send_keys(self.expmCbox.currentText())
             # driver.find_element_by_name('credit_card[year]').send_keys(self.expyCbox.currentText())
             # driver.find_element_by_id('orcer').send_keys(self.cvvLine.text())
 
-            # # Process save address and term&condition check box click
+
+
+            # Process save address and term&condition check box click
             for combo in driver.find_elements_by_css_selector('.iCheck-helper'):
                 combo.click()
 
-            
-
-
+        
             # Click process payment
-            # driver.find_element_by_name('commit').click()
+            driver.find_element_by_name('commit').click()
             
             
             
