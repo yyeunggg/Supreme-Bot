@@ -8,6 +8,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.select import Select
+from selenium.webdriver.chrome.options import Options
 
 import traceback
 import time
@@ -520,7 +521,7 @@ class Ui_MainWindow(object):
         self.catCbox.setItemText(6, _translate("MainWindow", "Bags"))
         self.catCbox.setItemText(7, _translate("MainWindow", "Acc"))
         self.catCbox.setItemText(8, _translate("MainWindow", "Skate"))
-        self.colorCombo.setItemText(0, _translate("MainWindow", "Red"))
+        self.colorCombo.setItemText(0, _translate("MainWindow", "Olive Russian Camo"))
         self.colorCombo.setItemText(1, _translate("MainWindow", "Orange"))
         self.colorCombo.setItemText(2, _translate("MainWindow", "Yellow"))
         self.colorCombo.setItemText(3, _translate("MainWindow", "Green"))
@@ -530,7 +531,7 @@ class Ui_MainWindow(object):
         self.colorCombo.setItemText(7, _translate("MainWindow", "Black"))
         self.colorCombo.setItemText(8, _translate("MainWindow", "White"))
         self.colorCombo.setItemText(9, _translate("MainWindow", "Tan"))
-        self.colorCombo.setItemText(10, _translate("MainWindow", "Olive Russian Camo"))
+        self.colorCombo.setItemText(10, _translate("MainWindow", "Red"))
         self.colorCombo.setItemText(11, _translate("MainWindow", "Others"))
         self.catLabel.setText(_translate("MainWindow", "Category"))
         self.colorLab.setText(_translate("MainWindow", "Color"))
@@ -641,10 +642,37 @@ class Ui_MainWindow(object):
     def initial(self, MainWindow):
         # load chrome
         global driver
-        driver = webdriver.Chrome(ChromeDriverManager().install())
+
+        ## Steven Code
+        chrome_options = self.add_chrome_argument_options()
+        driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options) #added anti-bot behaviors
+        ## End of Steven Code
 
         # Goto Surpeme url
         driver.get('https://www.supremenewyork.com/shop/all')
+        
+    
+    ## Steven Code
+    def add_chrome_argument_options(self):
+        """
+        add_argument_options : None -> Options()
+        add_argument_options() Disable Blink features and automation indicator to imitate human interaction with navigator. Return Options.
+        """
+        chrome_options = Options()
+        # chrome_options.add_argument("--kiosk")
+        # chrome_options.add_argument("disable-infobars")
+        # chrome_options.add_argument("--start-maximized")
+        chrome_options.add_argument("--disable-extensions")
+        chrome_options.add_argument("--disable-blink-features")
+        chrome_options.add_argument('--profile-directory=Default')
+        chrome_options.add_argument("--disable-plugins-discovery")
+        chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+        chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        chrome_options.add_experimental_option('useAutomationExtension', False)
+
+        return chrome_options
+    ## End of Steven Code
+    
 
     def addToCart(self, MainWindow):
         try:
